@@ -6,7 +6,9 @@ use App\Models\Product;
 use App\Http\Requests\StoreProductRequest;
 use App\Http\Requests\UpdateProductRequest;
 use App\Models\Category;
+use Illuminate\Database\QueryException;
 use Illuminate\Http\Response as HttpResponse;
+use Illuminate\Support\Facades\Validator;
 
 class ProductController extends Controller
 {
@@ -47,13 +49,28 @@ class ProductController extends Controller
      */
     public function store(StoreProductRequest $request)
     {
-        $product = Product::create($request->all());
+        $validator = Validator::make($request->all(), [
+            "ProductName" => ["required"],
+            "ProductDescription"=> ["required"],
+            "ProductPrice"=> ["required", "numeric"],
+            "CategoryID"=> ["required"],
+            "ProductImageURL"=> ["required"],
+        ]);
 
-        $response = [
-            "message"=> "POST Product Data success",
-            "data"=> $product
-        ];
-        return response()->json($response, HttpResponse::HTTP_CREATED);
+        if ($validator->fails()) {
+            return response()->json($validator->errors(), HttpResponse::HTTP_BAD_REQUEST);
+        }
+        try {
+            $product = Product::create($request->all());
+            $response = [
+                "message" => "Data Product Success Added",
+                "data"=> $product,
+            ];
+            return response()->json($response, HttpResponse::HTTP_CREATED);
+        }
+        catch (\Exception $e) {
+            return response()->json($e->getMessage(), HttpResponse::HTTP_BAD_REQUEST);
+        }
     }
 
     /**
@@ -62,9 +79,14 @@ class ProductController extends Controller
      * @param  \App\Models\Product  $product
      * @return \Illuminate\Http\Response
      */
-    public function show(Product $product)
+    public function show($id)
     {
-        //
+        $products = Product::findOrFail($id);
+        $response = [
+            "message"=> "Data Found!",
+            "data"=> $products,
+        ];
+        return response()->json($response, HttpResponse::HTTP_OK);
     }
 
     /**
@@ -85,9 +107,32 @@ class ProductController extends Controller
      * @param  \App\Models\Product  $product
      * @return \Illuminate\Http\Response
      */
-    public function update(UpdateProductRequest $request, Product $product)
+    public function update(UpdateProductRequest $request, $id)
     {
-        //
+        $products = Product::where($request->all())->findOrFail($id);
+
+        $validator = Validator::make($request->all(), [
+            "ProductName" => ["required"],
+            "ProductDescription"=> ["required"],
+            "ProductPrice"=> ["required", "numeric"],
+            "CategoryID"=> ["required"],
+            "ProductImageURL"=> ["required"],
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json($validator->errors(), HttpResponse::HTTP_BAD_REQUEST);
+        }
+        try {
+            $products->update($request->all());
+            $response = [
+                "message" => "Data Product Success Added",
+                "data"=> $products,
+            ];
+            return response()->json($response, HttpResponse::HTTP_CREATED);
+        }
+        catch (QueryException $e) {
+            return response()->json($e->getMessage(), HttpResponse::HTTP_BAD_REQUEST);
+        }
     }
 
     /**
@@ -96,8 +141,22 @@ class ProductController extends Controller
      * @param  \App\Models\Product  $product
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Product $product)
+    public function destroy($id)
     {
         //
+        $products = Product::findOrFail($id);
+
+        try {
+            $products->delete();
+            $response = [
+                "message"=> "Product Delete!",
+                "data"=> $products,
+            ];
+            return response()->json($response, HttpResponse::HTTP_NO_CONTENT);
+        }
+        catch(QueryException $e) {
+            return response()->json($e->getMessage(), HttpResponse::HTTP_BAD_REQUEST);
+        }
+
     }
 }

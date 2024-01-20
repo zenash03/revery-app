@@ -5,7 +5,9 @@ namespace App\Http\Controllers;
 use App\Models\Category;
 use App\Http\Requests\StoreCategoryRequest;
 use App\Http\Requests\UpdateCategoryRequest;
+use Illuminate\Database\QueryException;
 use Illuminate\Http\Response as HttpResponse;
+use Illuminate\Support\Facades\Validator;
 
 class CategoryController extends Controller
 {
@@ -44,13 +46,24 @@ class CategoryController extends Controller
      */
     public function store(StoreCategoryRequest $request)
     {
-        $categories = Category::create($request->all());
+        $validator = Validator::make($request-> all(), [
+            "CategoryName"=> ["required", "string", "100"],
+            "CategoryDescription" => ["nullable", "string"]
+        ]);
+        if ($validator->fails()) {
+            return response()->json([$validator->errors()], HttpResponse::HTTP_BAD_REQUEST);
+        }
+        try {
+            $categories = Category::create($request->all());
+            $response = [
+                "message" => "Data Category Success Added",
+                "data" => $categories
+            ];
+            return response()->json($response, HttpResponse::HTTP_CREATED);
 
-        $response = [
-            "message"=> "POST Category Data Success",
-            "data"=> $categories,
-        ];
-        return response()->json($response, HttpResponse::HTTP_CREATED);
+        } catch (QueryException $e) {
+            return response()->json([$e->getMessage()], HttpResponse::HTTP_BAD_REQUEST);
+        }
     }
 
     /**
@@ -59,9 +72,15 @@ class CategoryController extends Controller
      * @param  \App\Models\Category  $category
      * @return \Illuminate\Http\Response
      */
-    public function show(Category $category)
+    public function show($id)
     {
-        //
+        $categories = Category::findOrFail($id);
+
+        $response = [
+            "message" => "Data Found!",
+            "data" => $categories
+        ];
+        return response()->json($response, HttpResponse::HTTP_OK);
     }
 
     /**
@@ -82,9 +101,28 @@ class CategoryController extends Controller
      * @param  \App\Models\Category  $category
      * @return \Illuminate\Http\Response
      */
-    public function update(UpdateCategoryRequest $request, Category $category)
+    public function update(UpdateCategoryRequest $request, $id)
     {
-        //
+        $categories = Category::where('CategoryID', $id)->findOrFail();
+
+        $validator = Validator::make($request-> all(), [
+            "CategoryName"=> ["required"],
+            "CategoryDescription" => ["required"]
+        ]);
+        if ($validator->fails()) {
+            return response()->json([$validator->errors()], HttpResponse::HTTP_BAD_REQUEST);
+        }
+        try {
+            $categories->update($request->all());
+            $response = [
+                "message" => "Data Category Updated",
+                "data" => $categories
+            ];
+            return response()->json($response, HttpResponse::HTTP_CREATED);
+
+        } catch (QueryException $e) {
+            return response()->json([$e->getMessage()], HttpResponse::HTTP_BAD_REQUEST);
+        }
     }
 
     /**
@@ -93,8 +131,19 @@ class CategoryController extends Controller
      * @param  \App\Models\Category  $category
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Category $category)
+    public function destroy($id)
     {
-        //
+        $categories = Category::findOrFail($id);
+
+        try {
+            $categories->delete();
+            $response = [
+                "message"=> "Data Deleted!",
+                "data" => $categories
+            ];
+            return response()->json($response, HttpResponse::HTTP_OK);
+        } catch (QueryException $e) {
+            return response()->json([$e->getMessage()], HttpResponse::HTTP_BAD_REQUEST);
+        }
     }
 }
