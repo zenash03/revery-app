@@ -5,11 +5,13 @@ namespace App\Http\Controllers;
 use App\Models\Category;
 use App\Http\Requests\StoreCategoryRequest;
 use App\Http\Requests\UpdateCategoryRequest;
+use App\Http\Resources\Categories;
+use App\Http\Resources\CategoriesResource;
 use Illuminate\Database\QueryException;
 use Illuminate\Http\Response as HttpResponse;
 use Illuminate\Support\Facades\Validator;
 
-class CategoryController extends Controller
+class CategoryController extends BaseAPIController
 {
     /**
      * Display a listing of the resource.
@@ -21,11 +23,7 @@ class CategoryController extends Controller
         //
         $categories = Category::all();
 
-        $response = [
-            "message" => "GET category Data Success",
-            "data" => $categories,
-        ];
-        return response()->json($response, HttpResponse::HTTP_OK);
+        return $this->sendResponse(CategoriesResource::collection($categories), 'Category Data Fetched.');
     }
 
     /**
@@ -46,23 +44,28 @@ class CategoryController extends Controller
      */
     public function store(StoreCategoryRequest $request)
     {
+
         $validator = Validator::make($request-> all(), [
             "CategoryName"=> ["required", "string", "100"],
             "CategoryDescription" => ["nullable", "string"]
         ]);
         if ($validator->fails()) {
-            return response()->json([$validator->errors()], HttpResponse::HTTP_BAD_REQUEST);
+            return $this->sendError($validator->errors()->first(), "Input Data Invalid!", 402);
         }
         try {
-            $categories = Category::create($request->all());
-            $response = [
-                "message" => "Data Category Success Added",
-                "data" => $categories
-            ];
-            return response()->json($response, HttpResponse::HTTP_CREATED);
+            $lastID = Category::max("CategoryID");
+            $idNum = substr($lastID, 1);
+            $newID = sprintf("C%04d", $idNum + 1);
 
-        } catch (QueryException $e) {
-            return response()->json([$e->getMessage()], HttpResponse::HTTP_BAD_REQUEST);
+            $requestData = $request->all();
+            $requestData["CategoryID"] = $newID;
+
+            $categories = Category::create($requestData);
+
+            return $this->sendResponse(CategoriesResource::collection($categories),"Category Data Added");
+        }
+         catch (QueryException $e) {
+            return $this->sendError($e->getMessage(), "Error");
         }
     }
 
