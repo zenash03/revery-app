@@ -16,9 +16,9 @@ class CategorySeeder extends Seeder
     public function run()
     {
         $categories = [
-            ['CategoryID' => 'CA001', 'CategoryName' => 'Hand Bouquet', 'CategoryDescription' => 'Bouquets by HandMade'],
-            ['CategoryID' => 'CA002', 'CategoryName' => 'Custom Bouquet', 'CategoryDescription' => 'Bouquets for custom order'],
-            ['CategoryID' => 'CA003', 'CategoryName' => 'Money Bouquet', 'CategoryDescription' => 'Bouquets from money'],
+            ['category_id' => 'CAT-000001', 'category_name' => 'Hand Bouquet', 'category_description' => 'Bouquets by HandMade'],
+            ['category_id' => 'CAT-000002', 'category_name' => 'Custom Bouquet', 'category_description' => 'Bouquets for custom order'],
+            ['category_id' => 'CAT-000003', 'category_name' => 'Money Bouquet', 'category_description' => 'Bouquets from money'],
 
         ];
 

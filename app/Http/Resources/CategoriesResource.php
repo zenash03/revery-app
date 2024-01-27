@@ -16,14 +16,14 @@ class CategoriesResource extends JsonResource
     public function toArray($request)
     {
 
-        $categoryName = $this->resource->CategoryName;
+        $categoryName = $this->category_name;
         $slug = Str::slug($categoryName);
 
         return [
-            'category_id' => $this->CategoryID,
-            'category_name' => $this->CategoryName,
-            'slug' => $this->$slug,
-            'category_description' => $this->CategoryDescription,
+            'category_id' => $this->category_id,
+            'category_name' => $this->category_name,
+            'slug' => $slug,
+            'category_description' => $this->category_description,
             'created_at' => $this->created_at->format('m/d/Y'),
             'updated_at'=> $this->updated_at->format('m/d/Y'),
         ];

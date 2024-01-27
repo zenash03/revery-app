@@ -8,17 +8,17 @@ use Illuminate\Database\Eloquent\Model;
 class Category extends Model
 {
     protected $table = 'categories';
-    protected $primaryKey = 'CategoryID';
+    protected $primaryKey = 'category_id';
 
     public $incrementing = false;
 
     protected $fillable = [
-        'CategoryID',
-        'CategoryName',
-        'CategoryDescription',
+        'category_id',
+        'category_name',
+        'category_description',
     ];
 
     public function products(){
-        return $this->hasMany(Product::class, 'CategoryID', 'CategoryID');
+        return $this->hasMany(Product::class, 'category_id', 'category_id');
     }
 }
