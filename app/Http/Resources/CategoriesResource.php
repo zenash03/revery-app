@@ -25,7 +25,7 @@ class CategoriesResource extends JsonResource
             'slug' => $slug,
             'category_description' => $this->category_description,
             'created_at' => $this->created_at->format('m/d/Y'),
-            'updated_at'=> $this->updated_at->format('m/d/Y'),
+            'updated_at' => $this->updated_at->format('m/d/Y'),
         ];
     }
 }

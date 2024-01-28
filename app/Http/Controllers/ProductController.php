@@ -5,12 +5,16 @@ namespace App\Http\Controllers;
 use App\Models\Product;
 use App\Http\Requests\StoreProductRequest;
 use App\Http\Requests\UpdateProductRequest;
+use App\Http\Resources\ProductResource;
 use App\Models\Category;
+use Exception;
 use Illuminate\Database\QueryException;
+use Illuminate\Http\Request;
 use Illuminate\Http\Response as HttpResponse;
 use Illuminate\Support\Facades\Validator;
+use sirajcse\UniqueIdGenerator\UniqueIdGenerator;
 
-class ProductController extends Controller
+class ProductController extends BaseAPIController
 {
     /**
      * Display a listing of the resource.
@@ -21,8 +25,11 @@ class ProductController extends Controller
     {
         // $products = Product::all()::join('categories', 'products.CategoryID', '=', 'categories.CategoryID')->get();
 
-        $products = Product::with("category")->get();
+        $products = Product::query()->paginate(10);
 
+        // return $products;
+
+        return $this->sendResponse(ProductResource::collection($products), 'Product Data Fetched.');
 
         $response = [
             "message" => "GET Products Data success",
@@ -47,29 +54,33 @@ class ProductController extends Controller
      * @param  \App\Http\Requests\StoreProductRequest  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(StoreProductRequest $request)
+    public function store(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            "ProductName" => ["required"],
-            "ProductDescription"=> ["required"],
-            "ProductPrice"=> ["required", "numeric"],
-            "CategoryID"=> ["required"],
-            "ProductImageURL"=> ["required"],
+            "product_name" => "required",
+            "product_description"=> "required",
+            "product_price"=> ["required", "numeric"],
+            "category_id"=> ["required"],
+            "product_image_url"=> ["required"],
         ]);
 
         if ($validator->fails()) {
-            return response()->json($validator->errors(), HttpResponse::HTTP_BAD_REQUEST);
+            return $this->sendError($validator->errors()->first(), $validator->errors()->first(), 402);
         }
         try {
-            $product = Product::create($request->all());
-            $response = [
-                "message" => "Data Product Success Added",
-                "data"=> $product,
-            ];
-            return response()->json($response, HttpResponse::HTTP_CREATED);
+            $newID = UniqueIdGenerator::generate(['table' => 'products', 'field' => 'product_id', 'length' => 10, 'prefix' => 'P-']);
+
+            $requestData = $request->all();
+            $requestData["product_id"] = $newID;
+
+            $product = Product::create($requestData);
+
+            return $this->sendResponse(new ProductResource($product), "Product data added.");
+
+            // return response()->json($response, HttpResponse::HTTP_CREATED);
         }
         catch (\Exception $e) {
-            return response()->json($e->getMessage(), HttpResponse::HTTP_BAD_REQUEST);
+            return $this->sendError($e->getMessage(), "Error");
         }
     }
 
@@ -81,10 +92,22 @@ class ProductController extends Controller
      */
     public function show($id)
     {
-        $products = Product::findOrFail($id);
+        // $products = Product::findOrFail($id);
+        // $response = [
+        //     "message"=> "Data Found!",
+        //     "data"=> $products,
+        // ];
+        // return response()->json($response, HttpResponse::HTTP_OK);
+
+        $products = Product::query()->find($id);
+
+        // return $products;
+
+        return $this->sendResponse(new ProductResource($products), 'Product Data Fetched.');
+
         $response = [
-            "message"=> "Data Found!",
-            "data"=> $products,
+            "message" => "GET Products Data success",
+            "data"=> $products
         ];
         return response()->json($response, HttpResponse::HTTP_OK);
     }
@@ -107,31 +130,33 @@ class ProductController extends Controller
      * @param  \App\Models\Product  $product
      * @return \Illuminate\Http\Response
      */
-    public function update(UpdateProductRequest $request, $id)
+    public function update(Request $request, Product $product)
     {
-        $products = Product::where($request->all())->findOrFail($id);
+        // $products = Product::where($request->all())->findOrFail($id);
+        $input = $request->all();
 
         $validator = Validator::make($request->all(), [
-            "ProductName" => ["required"],
-            "ProductDescription"=> ["required"],
-            "ProductPrice"=> ["required", "numeric"],
-            "CategoryID"=> ["required"],
-            "ProductImageURL"=> ["required"],
+            "product_name" => "required",
+            "product_description"=> "required",
+            "product_price"=> ["required", "numeric"],
+            "category_id"=> ["required"],
+            "product_image_url"=> ["required"],
         ]);
 
         if ($validator->fails()) {
-            return response()->json($validator->errors(), HttpResponse::HTTP_BAD_REQUEST);
+            return $this->sendError($validator->errors()->first(), $validator->errors()->first(), 402);
         }
         try {
-            $products->update($request->all());
-            $response = [
-                "message" => "Data Product Success Added",
-                "data"=> $products,
-            ];
-            return response()->json($response, HttpResponse::HTTP_CREATED);
+            $product->product_name = $input["product_name"];
+            $product->product_description = $input["product_description"];
+            $product->product_price = $input["product_price"];
+            $product->product_image_url = $input["product_image_url"];
+            $product->save();
+
+            return $this->sendResponse(new ProductResource($product),"Product Updated.");
         }
         catch (QueryException $e) {
-            return response()->json($e->getMessage(), HttpResponse::HTTP_BAD_REQUEST);
+            return $this->sendError($e->getMessage(), $e->getCode(), 400);
         }
     }
 
@@ -141,21 +166,14 @@ class ProductController extends Controller
      * @param  \App\Models\Product  $product
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Product $product)
     {
         //
-        $products = Product::findOrFail($id);
-
         try {
-            $products->delete();
-            $response = [
-                "message"=> "Product Delete!",
-                "data"=> $products,
-            ];
-            return response()->json($response, HttpResponse::HTTP_NO_CONTENT);
-        }
-        catch(QueryException $e) {
-            return response()->json($e->getMessage(), HttpResponse::HTTP_BAD_REQUEST);
+            $product->delete();
+            return $this->sendResponse(new ProductResource($product),"Product Deleted.");
+        } catch (Exception $e) {
+            return $this->sendError($e->getMessage(), $e->getCode(), 400);
         }
 
     }

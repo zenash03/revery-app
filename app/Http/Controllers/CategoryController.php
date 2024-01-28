@@ -114,11 +114,16 @@ class CategoryController extends BaseAPIController
         if ($validator->fails()) {
             return $this->sendError($validator->errors()->first(), '', 400);
         }
-        $category->category_name = $input['category_name'];
-        $category->category_description = $input['category_description'];
-        $category->save();
+        try {
+            $category->category_name = $input['category_name'];
+            $category->category_description = $input['category_description'];
+            $category->save();
 
-        return $this->sendResponse(new CategoriesResource($category),'Category Updated');
+            return $this->sendResponse(new CategoriesResource($category),'Category Updated');
+        } catch (QueryException $e) {
+            return $this->sendError($e->getMessage(), '',400);
+        }
+
 
         // $categories = Category::where('category_id', $id)->findOrFail();
 
@@ -150,9 +155,11 @@ class CategoryController extends BaseAPIController
      */
     public function destroy(Category $category)
     {
-        $category->delete();
-        return $this->sendResponse(new CategoriesResource($category),'Category Deleted.');
-
+        try {
+            $category->delete();
+        } catch (QueryException $e) {
+            return $this->sendResponse(new CategoriesResource($category),'Category Deleted.');
+        }
         // $categories = Category::findOrFail($id);
         // try {
         //     $categories->delete();

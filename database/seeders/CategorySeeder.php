@@ -5,6 +5,7 @@ namespace Database\Seeders;
 use App\Models\Category;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use sirajcse\UniqueIdGenerator\UniqueIdGenerator;
 
 class CategorySeeder extends Seeder
 {
@@ -24,9 +25,19 @@ class CategorySeeder extends Seeder
 
         // DB::table('category')->insert($categories);
 
-        // $faker = \Faker\Factory::create();
-        foreach ($categories as $category) {
-            Category::create($category);
+        // foreach ($categories as $category) {
+            //     Category::create($category);
+            // }
+
+        $faker = \Faker\Factory::create();
+        for( $i = 0; $i < 15; $i++ ) {
+            $newID = UniqueIdGenerator::generate(['table' => 'categories', 'field' => 'category_id', 'length' => 10, 'prefix' => 'CAT-']);
+
+            Category::create([
+                'category_id' => $newID,
+                'category_name' => $faker->name,
+                'category_description' => $faker->sentence
+            ]);
         }
     }
 }
