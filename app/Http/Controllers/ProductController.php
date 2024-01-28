@@ -24,12 +24,33 @@ class ProductController extends BaseAPIController
     public function index()
     {
         // $products = Product::all()::join('categories', 'products.CategoryID', '=', 'categories.CategoryID')->get();
+        $page = 10;
 
-        $products = Product::query()->paginate(10);
+        $products = Product::query()->paginate($page);
 
-        // return $products;
+        $template = $products;
+        $resource = ProductResource::collection($products->items());
 
-        return $this->sendResponse(ProductResource::collection($products), 'Product Data Fetched.');
+        $response = [
+            'data' => $resource,
+            'links' => [
+                'first' => $template->url(1),
+                'last' => $template->url($template->lastPage()),
+                'prev' => $template->previousPageUrl(),
+                'next' => $template->nextPageUrl(),
+            ],
+            'meta' => [
+                'current_page' => $template->currentPage(),
+                'from' => $template->firstItem(),
+                'last_page' => $template->lastPage(),
+                'path' => null,
+                'per_page' => $page,
+                'to' => $template->lastItem(),
+                'total' => $template->total(),
+            ],
+        ];
+
+        return $this->sendResponse($response, 'Product Data Fetched.');
 
         $response = [
             "message" => "GET Products Data success",
