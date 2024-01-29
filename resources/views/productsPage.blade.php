@@ -7,7 +7,8 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Products</title>
 
-    @vite('resources/css/app.css')
+    @vite(['resources/css/app.css', 'resources/js/app.js'])
+
     <!-- Include Swiper CSS -->
     {{-- <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css" /> --}}
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
@@ -21,7 +22,10 @@
     @component('layouts.components.header')
     @endcomponent
     <section class="p-12"></section>
-
+    <section>
+        {{-- {{ $url }} --}}
+        {{-- {{ $headers["Authorization"] }} --}}
+    </section>
     <section class="py-8" id="breadcrumb">
         <div class="container px-8 mx-auto">
             <nav class="flex" aria-label="Breadcrumb">
@@ -67,42 +71,32 @@
     <section class="py-8 pb-40">
         <div class="container px-8 mx-auto overflow-hidden">
             <h2 class="text-2xl font-secondary text-gray-800">Products</h2>
-            <div class="py-6">
-                <button id="dropdownDefaultButton" data-dropdown-toggle="dropdown"
-                    class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center"
-                    type="button">Dropdown button <svg class="w-2.5 h-2.5 ms-3" aria-hidden="true"
-                        xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
-                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                            d="m1 1 4 4 4-4" />
+            {{-- <div class="py-6">
+                <button id="dropdownOffsetButton" data-dropdown-toggle="dropdownSkidding" data-dropdown-offset-distance="10" data-dropdown-offset-skidding="100" data-dropdown-placement="right" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800" type="button">Dropdown button <svg class="w-2.5 h-2.5 ms-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
+                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 4 4 4-4"/>
                     </svg>
-                </button>
+                    </button>
 
-                <!-- Dropdown menu -->
-                <div id="dropdown"
-                    class="z-10 hidden bg-white divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700">
-                    <ul class="py-2 text-sm text-gray-700 dark:text-gray-200" aria-labelledby="dropdownDefaultButton">
-                        <li>
-                            <a href="#"
-                                class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Dashboard</a>
-                        </li>
-                        <li>
-                            <a href="#"
-                                class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Settings</a>
-                        </li>
-                        <li>
-                            <a href="#"
-                                class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Earnings</a>
-                        </li>
-                        <li>
-                            <a href="#"
-                                class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Sign
-                                out</a>
-                        </li>
-                    </ul>
-                </div>
-            </div>
+                    <!-- Dropdown menu -->
+                    <div id="dropdownSkidding" class="z-10 hidden bg-white divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700">
+                        <ul class="py-2 text-sm text-gray-700 dark:text-gray-200" aria-labelledby="dropdownDefault">
+                          <li>
+                            <a href="#" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Dashboard</a>
+                          </li>
+                          <li>
+                            <a href="#" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Settings</a>
+                          </li>
+                          <li>
+                            <a href="#" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Earnings</a>
+                          </li>
+                          <li>
+                            <a href="#" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Sign out</a>
+                          </li>
+                        </ul>
+                    </div>
+            </div> --}}
 
-            <div class="grid xs:grid-cols-1 md:grid-cols-5 lg:grid-cols-5 gap-8">
+            <div class="mt-5 grid xs:grid-cols-1 md:grid-cols-5 lg:grid-cols-5 gap-8">
                 @for ($i = 0; $i < 10; $i++)
                     <div class="w-full max-w-lg bg-white border border-gray-200 rounded-lg shadow">
                         <a href="#">
@@ -256,8 +250,26 @@
         </div>
     </section>
     --}}
+    <script>
+        console.log("baye")
+    </script>
+    <script type="module">
+    console.log("WDAWDAd")
+        var settings = {
+            "url": "http://127.0.0.1:8000/api/products",
+            "method": "GET",
+            "timeout": 0,
+            "headers": {
+                "Authorization": "Bearer 3|n4cDcB5uGDRDkCKVXR3mM72zyuNGKfaloxY2Lm7ue80657bc"
+            },
+        };
+        console.log("heelo")
 
-
+        $.ajax(settings).done(function(response) {
+            console.log(response);
+            console.log('aaa')
+        });
+    </script>
 </body>
 
 </html>
