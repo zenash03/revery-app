@@ -20,3 +20,4 @@ Route::get('/', function () {
 
 Route::get('/menu', [PageController::class,'menuPage'])->name('menu');
 Route::get('/home', [PageController::class,'homePage'])->name('landing');
+Route::get('/products', [PageController::class,'productsPage'])->name('products');

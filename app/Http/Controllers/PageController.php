@@ -15,4 +15,8 @@ class PageController extends Controller
         $agent = new Agent();
         return view("menuPage", compact('agent'));
     }
+    public function productsPage() {
+        $agent = new Agent();
+        return view('productsPage', compact('agent'));
+    }
 }
