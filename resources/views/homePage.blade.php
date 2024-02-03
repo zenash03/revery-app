@@ -1,36 +1,13 @@
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Home Page</title>
-    @vite('resources/css/app.css')
-    <!-- Include Swiper CSS -->
-    {{-- <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css" /> --}}
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
-
-    <!-- Include Swiper JS -->
-    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.x.x/dist/alpine.min.js" defer></script>
-</head>
-
-
-<body class="bg-slate-50 w-full">
-    {{-- <h1 class="text-3xl font-primary">Hai</h1> --}}
-
-    {{-- <Header class="w-full text-gray-700 bg-white">
-        <h1 class="font-primary">HHHHA</h1>
-    </Header> --}}
-
-    <!-- component -->
+@extends('layouts.components.app')
+@section('header')
     @component('layouts.components.header')
-
     @endcomponent
+@endsection
+
+@section('body')
+
     <div class="bg-cover bg-fixed bg-no-repeat bg-background1 h-screen bg-top" id="home">
-        <div class="h-screen bg-opacity-50 bg-black flex items-center justify-center"
-            style="background:rgba(0,0,0,0.5);">
+        <div class="h-screen bg-opacity-50 bg-black flex items-center justify-center" style="background:rgba(0,0,0,0.5);">
             <div class="mx-2 text-center">
                 <h1 class="text-gray-100 font-primary tracking-wide text-3xl xs:text-5xl md:text-6xl">
                     <span class="text-white">Welcome</span> To Revery
@@ -82,8 +59,10 @@
                                 class="w-full h-64 object-cover">
                             <div class="p-6">
                                 <h3 class="text-xl font-primary text-gray-800 mb-2">Hand Bouquet</h3>
-                                <p class="text-gray-600 font-secondary">Elegantly crafted hand bouquets for special moments.</p>
-                                <button class="mt-4 font-secondary bg-primary text-white py-2 px-4 rounded-full">Shop Now</button>
+                                <p class="text-gray-600 font-secondary">Elegantly crafted hand bouquets for special moments.
+                                </p>
+                                <button class="mt-4 font-secondary bg-primary text-white py-2 px-4 rounded-full">Shop
+                                    Now</button>
                             </div>
                         </div>
                         <!-- Money Bouquet -->
@@ -92,8 +71,10 @@
                                 class="w-full h-64 object-cover">
                             <div class="p-6">
                                 <h3 class="text-xl font-primary text-gray-800 mb-2">Money Bouquet</h3>
-                                <p class="text-gray-600 font-secondary">A unique blend of flowers and notes for a creative gift.</p>
-                                <button class="mt-4 font-secondary bg-primary text-white py-2 px-4 rounded-full">Shop Now</button>
+                                <p class="text-gray-600 font-secondary">A unique blend of flowers and notes for a creative
+                                    gift.</p>
+                                <button class="mt-4 font-secondary bg-primary text-white py-2 px-4 rounded-full">Shop
+                                    Now</button>
                             </div>
                         </div>
                         <!-- Custom Bouquet -->
@@ -102,8 +83,10 @@
                                 class="w-full h-64 object-cover">
                             <div class="p-6">
                                 <h3 class="text-xl font-primary text-gray-800 mb-2">Custom Bouquet</h3>
-                                <p class="text-gray-600 font-secondary">Create your own bouquet with our customizable options.</p>
-                                <button class="mt-4 font-secondary bg-primary text-white py-2 px-4 rounded-full">Shop Now</button>
+                                <p class="text-gray-600 font-secondary">Create your own bouquet with our customizable
+                                    options.</p>
+                                <button class="mt-4 font-secondary bg-primary text-white py-2 px-4 rounded-full">Shop
+                                    Now</button>
                             </div>
                         </div>
                     </div>
@@ -118,7 +101,8 @@
                         <div class="p-6">
                             <h3 class="text-xl font-primary text-gray-800 mb-2">Hand Bouquet</h3>
                             <p class="font-secondary text-gray-600">Elegantly crafted hand bouquets for special moments.</p>
-                            <button class="mt-4 font-secondary bg-primary text-white py-2 px-4 rounded-full">Shop Now</button>
+                            <button class="mt-4 font-secondary bg-primary text-white py-2 px-4 rounded-full">Shop
+                                Now</button>
                         </div>
                     </div>
                     <!-- Money Bouquet -->
@@ -127,8 +111,10 @@
                             class="w-full h-64 object-cover">
                         <div class="p-6">
                             <h3 class="text-xl font-primary text-gray-800 mb-2">Money Bouquet</h3>
-                            <p class="font-secondary text-gray-600">A unique blend of flowers and notes for a creative gift.</p>
-                            <button class="mt-4 font-secondary bg-primary text-white py-2 px-4 rounded-full">Shop Now</button>
+                            <p class="font-secondary text-gray-600">A unique blend of flowers and notes for a creative gift.
+                            </p>
+                            <button class="mt-4 font-secondary bg-primary text-white py-2 px-4 rounded-full">Shop
+                                Now</button>
                         </div>
                     </div>
                     <!-- Custom Bouquet -->
@@ -137,16 +123,19 @@
                             class="w-full h-64 object-cover">
                         <div class="p-6">
                             <h3 class="text-xl font-primary text-gray-800 mb-2">Custom Bouquet</h3>
-                            <p class="font-secondary text-gray-600">Create your own bouquet with our customizable options.</p>
-                            <button class="mt-4 font-secondary bg-primary text-white py-2 px-4 rounded-full">Shop Now</button>
+                            <p class="font-secondary text-gray-600">Create your own bouquet with our customizable options.
+                            </p>
+                            <button class="mt-4 font-secondary bg-primary text-white py-2 px-4 rounded-full">Shop
+                                Now</button>
                         </div>
                     </div>
                 </div>
             @endif
             <div class="text-center mt-20">
-                <button class="bg-primary text-white py-3 px-8 rounded-full font-secondary text-lg hover:bg-opacity-80" data-ripple-light="true">
-                    Explore All Collections
-                </button>
+                <a class="bg-primary text-white py-3 px-8 rounded-full font-secondary text-lg hover:bg-opacity-80"
+                    data-ripple-light="true" href="/products">
+                    Explore All Products
+                </a>
             </div>
 
 
@@ -170,6 +159,9 @@
         </div>
     </section>
 
+@endsection
+
+@section('footer')
     <section class="py-16 bg-neutral-50" id="contact">
         <div class="container mx-auto px-8">
             <h2 class="text-3xl font-primary text-gray-800 mb-10 text-center">Contact Us</h2>
@@ -182,8 +174,8 @@
                 <div class="">
                     <div class=" md:text-left">
                         <h1 class="text-lg font-secondary mb-4 font-semibold">Contact Details</h1>
-                        <p class="font-secondary tracking-wide text-gray-800 mb-4"><span
-                                class="font-bold">Phone:</span> 0877 7366 7184</p>
+                        <p class="font-secondary tracking-wide text-gray-800 mb-4"><span class="font-bold">Phone:</span>
+                            0877 7366 7184</p>
                         <p class="font-secondary tracking-wide text-gray-800 mb-4"><span
                                 class="font-bold">Instagram:</span> @revery.ind
                         </p>
@@ -194,42 +186,4 @@
             </div>
         </div>
     </section>
-
-</body>
-
-{{-- <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script> --}}
-
-<script>
-    var swiper = new Swiper('.swiper-container', {
-        slidesPerView: 1,
-        spaceBetween: 16,
-        // pagination: {
-        //     el: '.swiper-pagination',
-        //     clickable: true,
-        // },
-        scrollbar: {
-            el : '.swiper-scrollbar',
-            hide: true
-        }
-    });
-
-    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-        anchor.addEventListener('click', function(e) {
-            e.preventDefault();
-
-            const target = document.querySelector(this.getAttribute('href'));
-            const navigation = document.querySelector('.main-navigation');
-            const navHeight = navigation.offsetHeight;
-
-            document.documentElement.style.setProperty(
-                "--scroll-padding",
-                navHeight + 'px'
-            )
-            document.getElementById("navbar")
-
-            target.scrollIntoView();
-        });
-    });
-</script>
-
-</html>
+@endsection

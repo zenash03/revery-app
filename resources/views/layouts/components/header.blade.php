@@ -19,15 +19,15 @@
         <nav :class="{ 'flex': open, 'hidden': !open }"
             class="flex-col flex-grow pb-4 md:pb-0 md:flex md:justify-end md:flex-row">
             <a class="px-4 py-2 mt-2 text-base font-secondary bg-transparent rounded-lg dark-mode:bg-transparent dark-mode:hover:bg-gray-600 dark-mode:focus:bg-gray-600 dark-mode:focus:text-white dark-mode:hover:text-white dark-mode:text-gray-200 md:mt-0 md:ml-4 hover:text-gray-600 focus:outline-none focus:shadow-outline"
-                href="#home">Home</a>
+                href="/home">Home</a>
+            {{-- <a class="px-4 py-2 mt-2 text-base font-secondary bg-transparent rounded-lg dark-mode:bg-transparent dark-mode:hover:bg-gray-600 dark-mode:focus:bg-gray-600 dark-mode:focus:text-white dark-mode:hover:text-white dark-mode:text-gray-200 md:mt-0 md:ml-4 hover:text-gray-600 focus:outline-none focus:shadow-outline"
+                href="#aboutus">About Us</a> --}}
             <a class="px-4 py-2 mt-2 text-base font-secondary bg-transparent rounded-lg dark-mode:bg-transparent dark-mode:hover:bg-gray-600 dark-mode:focus:bg-gray-600 dark-mode:focus:text-white dark-mode:hover:text-white dark-mode:text-gray-200 md:mt-0 md:ml-4 hover:text-gray-600 focus:outline-none focus:shadow-outline"
-                href="#aboutus">About Us</a>
-            <a class="px-4 py-2 mt-2 text-base font-secondary bg-transparent rounded-lg dark-mode:bg-transparent dark-mode:hover:bg-gray-600 dark-mode:focus:bg-gray-600 dark-mode:focus:text-white dark-mode:hover:text-white dark-mode:text-gray-200 md:mt-0 md:ml-4 hover:text-gray-600 focus:outline-none focus:shadow-outline"
-                href="#products">Products</a>
-            <a class="px-4 py-2 mt-2 text-base font-secondary bg-transparent rounded-lg dark-mode:bg-transparent dark-mode:hover:bg-gray-600 dark-mode:focus:bg-gray-600 dark-mode:focus:text-white dark-mode:hover:text-white dark-mode:text-gray-200 md:mt-0 md:ml-4 hover:text-gray-600 focus:outline-none focus:shadow-outline"
-                href="#gallery">Gallery</a>
-            <a class="px-4 py-2 mt-2 text-base font-secondary bg-transparent rounded-lg dark-mode:bg-transparent dark-mode:hover:bg-gray-600 dark-mode:focus:bg-gray-600 dark-mode:focus:text-white dark-mode:hover:text-white dark-mode:text-gray-200 md:mt-0 md:ml-4 hover:text-gray-600 focus:outline-none focus:shadow-outline"
-                href="#contact">Contact</a>
+                href="/products">Products</a>
+            {{-- <a class="px-4 py-2 mt-2 text-base font-secondary bg-transparent rounded-lg dark-mode:bg-transparent dark-mode:hover:bg-gray-600 dark-mode:focus:bg-gray-600 dark-mode:focus:text-white dark-mode:hover:text-white dark-mode:text-gray-200 md:mt-0 md:ml-4 hover:text-gray-600 focus:outline-none focus:shadow-outline"
+                href="#gallery">Gallery</a> --}}
+            {{-- <a class="px-4 py-2 mt-2 text-base font-secondary bg-transparent rounded-lg dark-mode:bg-transparent dark-mode:hover:bg-gray-600 dark-mode:focus:bg-gray-600 dark-mode:focus:text-white dark-mode:hover:text-white dark-mode:text-gray-200 md:mt-0 md:ml-4 hover:text-gray-600 focus:outline-none focus:shadow-outline"
+                href="#contact">Contact</a> --}}
             {{-- <div @click.away="open = false" class="relative" x-data="{ open: false }">
                 <button @click="open = !open"
                     class="flex flex-row items-center w-full px-4 py-2 mt-2 text-base font-secondary text-left bg-transparent rounded-lg dark-mode:bg-transparent dark-mode:focus:text-white dark-mode:hover:text-white dark-mode:focus:bg-gray-600 dark-mode:hover:bg-gray-600 md:w-auto md:inline md:mt-0 md:ml-4 hover:text-gray-900 focus:text-gray-900 hover:bg-gray-200 focus:bg-gray-200 focus:outline-none focus:shadow-outline">

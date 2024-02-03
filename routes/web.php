@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\LoginController;
 use App\Http\Controllers\PageController;
 use App\Http\Controllers\ProductPageController;
 use Illuminate\Support\Facades\Route;
@@ -22,3 +23,6 @@ Route::get('/', function () {
 Route::get('/menu', [PageController::class,'menuPage'])->name('menu');
 Route::get('/home', [PageController::class,'homePage'])->name('landing');
 Route::get('/products', [ProductPageController::class,'productsPage'])->name('products');
+Route::get('/products/{slug}', [PageController::class, 'productDetailPage'])->name('productDetail');
+
+Route::get('/login', [LoginController::class, 'index'])->name('login');

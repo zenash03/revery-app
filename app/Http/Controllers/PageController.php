@@ -19,4 +19,8 @@ class PageController extends Controller
         $agent = new Agent();
         return view('productsPage', compact('agent'));
     }
+    public function productDetailPage($slug){
+        $agent = new Agent();
+        return view('productDetailPage', compact('agent', 'slug'));
+    }
 }

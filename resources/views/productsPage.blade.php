@@ -1,26 +1,10 @@
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Products</title>
-
-    @vite(['resources/css/app.css', 'resources/js/app.js'])
-
-    <!-- Include Swiper CSS -->
-    {{-- <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css" /> --}}
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
-
-    <!-- Include Swiper JS -->
-    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.x.x/dist/alpine.min.js" defer></script>
-</head>
-
-<body class="w-full">
+@extends('layouts.components.app')
+@section('header')
     @component('layouts.components.header')
     @endcomponent
+@endsection
+
+@section('body')
     <section class="p-12"></section>
     <section>
         {{-- {{ $url }} --}}
@@ -32,7 +16,7 @@
                 <ol class="inline-flex items-center space-x-1 md:space-x-2 rtl:space-x-reverse">
                     <li class="inline-flex items-center">
                         <a href="#"
-                            class="inline-flex items-center text-sm font-secondary font-semibold text-gray-600 hover:text-blue-600 dark:text-gray-400 dark:hover:text-slate-300">
+                            class="inline-flex items-center text-sm font-secondary font-semibold text-gray-600 hover:text-primary">
                             <svg class="w-3 h-3 me-2.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
                                 fill="currentColor" viewBox="0 0 20 20">
                                 <path
@@ -59,8 +43,7 @@
                                 <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
                                     stroke-width="1.5" d="m1 9 4-4-4-4" />
                             </svg>
-                            <span
-                                class="ms-1 text-sm font-secondary font-semibold md:ms-2 text-gray-400">Products</span>
+                            <span class="ms-1 text-sm font-secondary font-semibold md:ms-2 text-gray-400">Products</span>
                         </div>
                     </li>
                 </ol>
@@ -96,9 +79,9 @@
                     </div>
             </div> --}}
 
-            <div class="mt-5 grid xs:grid-cols-1 md:grid-cols-5 lg:grid-cols-5 gap-8">
-                @for ($i = 0; $i < 10; $i++)
-                    <div class="w-full max-w-lg bg-white border border-gray-200 rounded-lg shadow">
+            <div class="mt-5 grid xs:grid-cols-1 md:grid-cols-5 lg:grid-cols-5 gap-8" id="productData">
+                {{-- @for ($i = 0; $i < 10; $i++) --}}
+                {{-- <div class="w-full max-w-lg bg-white border border-gray-200 rounded-lg shadow">
                         <a href="#">
                             <img class="p-5 rounded-t-lg"
                                 src="{{ asset('images/collections -20240110T133638Z-001/collections/Custom Bouquet/2E280149-EB91-4844-8350-D03F5CC2CCCB.jpg') }}"
@@ -133,8 +116,8 @@
                                         <path
                                             d="M20.924 7.625a1.523 1.523 0 0 0-1.238-1.044l-5.051-.734-2.259-4.577a1.534 1.534 0 0 0-2.752 0L7.365 5.847l-5.051.734A1.535 1.535 0 0 0 1.463 9.2l3.656 3.563-.863 5.031a1.532 1.532 0 0 0 2.226 1.616L11 17.033l4.518 2.375a1.534 1.534 0 0 0 2.226-1.617l-.863-5.03L20.537 9.2a1.523 1.523 0 0 0 .387-1.575Z" />
                                     </svg>
-                                    <svg class="w-4 h-4 text-gray-200" aria-hidden="true"
-                                        xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 22 20">
+                                    <svg class="w-4 h-4 text-gray-200" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
+                                        fill="currentColor" viewBox="0 0 22 20">
                                         <path
                                             d="M20.924 7.625a1.523 1.523 0 0 0-1.238-1.044l-5.051-.734-2.259-4.577a1.534 1.534 0 0 0-2.752 0L7.365 5.847l-5.051.734A1.535 1.535 0 0 0 1.463 9.2l3.656 3.563-.863 5.031a1.532 1.532 0 0 0 2.226 1.616L11 17.033l4.518 2.375a1.534 1.534 0 0 0 2.226-1.617l-.863-5.03L20.537 9.2a1.523 1.523 0 0 0 .387-1.575Z" />
                                     </svg>
@@ -142,134 +125,175 @@
                                 <span
                                     class="bg-pink-100 text-primary text-xs font-semibold px-2.5 py-0.5 rounded ms-3">5.0</span>
                             </div>
-                        </div>
-                    </div>
-                @endfor
+                        </div> --}}
             </div>
+            {{-- @endfor --}}
+
+
+            <div class="flex flex-col py-12 justify-center items-center">
+                <!-- Previous Button -->
+                <span class="text-sm text-gray-700 dark:text-gray-400 font-secondary">
+                    Showing <span class="font-semibold text-gray-900 dark:text-white" id="pageFrom">1</span> to <span
+                        class="font-semibold text-gray-900 dark:text-white" id="pageTo">10</span> of <span
+                        class="font-semibold text-gray-900 dark:text-white" id="totalEntry">100</span> Entries
+                </span>
+                <div class="inline-flex mt-2 xs:mt-0">
+                    <button id="previousButton"
+                        class="flex items-center justify-center px-3 h-8 me-3 text-sm font-medium text-gray-500 bg-white border border-gray-300 rounded-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white font-secondary">
+                        <svg class="w-3.5 h-3.5 me-2 rtl:rotate-180" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
+                            fill="none" viewBox="0 0 14 10">
+                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.25"
+                                d="M13 5H1m0 0 4 4M1 5l4-4" />
+                        </svg>
+                        Previous
+                    </button>
+                    <button id="nextButton"
+                        class="flex items-center justify-center px-3 h-8 text-sm font-medium text-gray-500 bg-white border border-gray-300 rounded-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white font-secondary">
+                        Next
+                        <svg class="w-3.5 h-3.5 ms-2 rtl:rotate-180" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
+                            fill="none" viewBox="0 0 14 10">
+                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.25"
+                                d="M1 5h12m0 0L9 1m4 4L9 9" />
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+
 
 
 
 
         </div>
     </section>
+@endsection
 
-    {{--
-    <section class="py-16 bg-neutral-50 pb-40" id="products">
-        <div class="container mx-auto px-8 pb-5 overflow-hidden">
-            <h2 class="text-3xl font-primary text-gray-800 mb-10 text-center">Products</h2>
-            @if ($agent::isMobile())
-                <div class="swiper-container">
-                    <div class="swiper-wrapper grid">
-                        <!-- Hand Bouquet -->
-                        <div class="swiper-slide rounded-lg shadow-md">
-                            <img src="{{ asset('images/image (1).jpg') }}" alt="Hand Bouquet Image"
-                                class="w-full h-64 object-cover">
-                            <div class="p-6">
-                                <h3 class="text-xl font-primary text-gray-800 mb-2">Hand Bouquet</h3>
-                                <p class="text-gray-600 font-secondary">Elegantly crafted hand bouquets for special
-                                    moments.</p>
-                                <button class="mt-4 font-secondary bg-primary text-white py-2 px-4 rounded-full">Shop
-                                    Now</button>
-                            </div>
-                        </div>
-                        <!-- Money Bouquet -->
-                        <div class="swiper-slide rounded-lg shadow-md">
-                            <img src="{{ asset('images/image (3).jpg') }}" alt="Money Bouquet Image"
-                                class="w-full h-64 object-cover">
-                            <div class="p-6">
-                                <h3 class="text-xl font-primary text-gray-800 mb-2">Money Bouquet</h3>
-                                <p class="text-gray-600 font-secondary">A unique blend of flowers and notes for a
-                                    creative gift.</p>
-                                <button class="mt-4 font-secondary bg-primary text-white py-2 px-4 rounded-full">Shop
-                                    Now</button>
-                            </div>
-                        </div>
-                        <!-- Custom Bouquet -->
-                        <div class="swiper-slide rounded-lg shadow-md">
-                            <img src="{{ asset('images/image (6).jpg') }}" alt="Custom Bouquet Image"
-                                class="w-full h-64 object-cover">
-                            <div class="p-6">
-                                <h3 class="text-xl font-primary text-gray-800 mb-2">Custom Bouquet</h3>
-                                <p class="text-gray-600 font-secondary">Create your own bouquet with our customizable
-                                    options.</p>
-                                <button class="mt-4 font-secondary bg-primary text-white py-2 px-4 rounded-full">Shop
-                                    Now</button>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="swiper-scrollbar"></div>
-                </div>
-            @else
-                <div class="grid snap-x xs:grid-cols-3 md:grid-cols-3 lg:grid-cols-3 gap-8">
-                    <!-- Hand Bouquet -->
-                    <div class="snap-center overflow-hidden rounded-lg shadow-md">
-                        <img src="{{ asset('images/image (1).jpg') }}" alt="Hand Bouquet Image"
-                            class="w-full h-64 object-cover">
-                        <div class="p-6">
-                            <h3 class="text-xl font-primary text-gray-800 mb-2">Hand Bouquet</h3>
-                            <p class="font-secondary text-gray-600">Elegantly crafted hand bouquets for special
-                                moments.</p>
-                            <button class="mt-4 font-secondary bg-primary text-white py-2 px-4 rounded-full">Shop
-                                Now</button>
-                        </div>
-                    </div>
-                    <!-- Money Bouquet -->
-                    <div class="snap-center overflow-hidden rounded-lg shadow-md">
-                        <img src="{{ asset('images/image (3).jpg') }}" alt="Money Bouquet Image"
-                            class="w-full h-64 object-cover">
-                        <div class="p-6">
-                            <h3 class="text-xl font-primary text-gray-800 mb-2">Money Bouquet</h3>
-                            <p class="font-secondary text-gray-600">A unique blend of flowers and notes for a creative
-                                gift.</p>
-                            <button class="mt-4 font-secondary bg-primary text-white py-2 px-4 rounded-full">Shop
-                                Now</button>
-                        </div>
-                    </div>
-                    <!-- Custom Bouquet -->
-                    <div class="snap-center overflow-hidden rounded-lg shadow-md">
-                        <img src="{{ asset('images/image (6).jpg') }}" alt="Custom Bouquet Image"
-                            class="w-full h-64 object-cover">
-                        <div class="p-6">
-                            <h3 class="text-xl font-primary text-gray-800 mb-2">Custom Bouquet</h3>
-                            <p class="font-secondary text-gray-600">Create your own bouquet with our customizable
-                                options.</p>
-                            <button class="mt-4 font-secondary bg-primary text-white py-2 px-4 rounded-full">Shop
-                                Now</button>
-                        </div>
-                    </div>
-                </div>
-            @endif
-            <div class="text-center mt-20">
-                <button class="bg-primary text-white py-3 px-8 rounded-full font-secondary text-lg hover:bg-opacity-80"
-                    data-ripple-light="true">
-                    Explore All Collections
-                </button>
-            </div>
+@section('footer')
+@endsection
 
-
-        </div>
-    </section>
-    --}}
-    <script>
-        console.log("baye")
-    </script>
+@push('scripts')
     <script type="module">
-    console.log("WDAWDAd")
-        var settings = {
-            "url": "http://127.0.0.1:8000/api/products",
-            "method": "GET",
-            "timeout": 0,
-            "headers": {
-                "Authorization": "Bearer 3|n4cDcB5uGDRDkCKVXR3mM72zyuNGKfaloxY2Lm7ue80657bc"
-            },
-        };
-        console.log("heelo")
+        function setting(url, method, authorization) {
+            let settings = {
+                "url": url,
+                "method": method,
+                "timeout": 0,
+                "async": false,
+                "headers": {
+                    "Authorization": authorization,
+                },
+            };
+            return settings;
+        }
 
-        $.ajax(settings).done(function(response) {
-            console.log(response);
-            console.log('aaa')
-        });
+
+        function loadProductData(page = 1) {
+            var response = null;
+            let url = `http://127.0.0.1:8000/api/products?page=${page}`;
+            let settings = setting(url, "GET",
+                "Bearer 1|IhNn8OHUHlZPFl8fIBN41RhukE444SfRRFuCuHJi1102ff7f")
+            $.ajax(settings).done(function(res) {
+                response = res;
+                // console.log(response);
+            });
+            return response;
+        }
+
+        // let data = loadProductData()
+        // console.log(data)
+
+        function templateProduct(data) {
+            // let product_id = data.product_id;
+            // console.log(data)
+            let product_name = data.product_name;
+            let slug = data.slug;
+            let product_price = data.product_price;
+            let category_name = data.category.category_name;
+            let product_image_url = data.product_image_url;
+
+            let params = data;
+            // let str = $.param(params);
+            let str = encodeURIComponent(JSON.stringify(params))
+            // let decode = decodeURIComponent($.param (params));
+            // console.log(decode)
+
+            product_price = "Rp " + product_price
+            let element =
+            // onclick="navigate('${str}')"
+                `<div class="w-full max-w-lg bg-white border border-gray-200 rounded-lg shadow">
+                    <a href="/products/${slug}" onclick="navigate('${str}', '${slug}')">
+                        <img class="p-5 pb-3 rounded-t-lg"
+                            src="{{ asset('images/collections -20240110T133638Z-001/collections/Custom Bouquet/2E280149-EB91-4844-8350-D03F5CC2CCCB.jpg') }}"
+                            alt="product image" />
+                    </a>
+                        <div class="px-5 pb-5">
+                            <p class="font-secondary text-xs font-semibold text-primary pb-1">${category_name}</p>
+                            <div>
+                                <h5 class="text-md font-secondary font-medium text-gray-900">${product_name}</h5>
+                            </div>
+                            <h5 class="py-2 text-md font-secondary font-semibold tracking-normal text-gray-900">${product_price}</h5>
+                        </div>`
+
+            return element;
+        }
+
+        $.urlParam = function(name) {
+            var results = new RegExp('[\?&]' + name + '=([^&#]*)').exec(window.location.href);
+            if (results != null) {
+                return results[1] || 0
+            } else {
+                return 1
+            }
+        }
+        $(document).ready(function () {
+            $("button").click(function () {
+                console.log("adwad")
+            })
+        })
+
+        $(window).on("load", function() {
+            let page = $.urlParam('page');
+            // console.log(page)
+
+            let getData = loadProductData(page).data
+            // console.log(getData)
+
+            let productData = getData.data
+            productData.forEach(data => {
+                $('#productData').append(templateProduct(data))
+            });
+
+            let meta = getData.meta;
+
+            $('#pageFrom').text(meta.from)
+            $('#pageTo').text(meta.to)
+            $('#totalEntry').text(meta.total)
+
+            let links = getData.links;
+
+            $("#previousButton").click(function() {
+                let currentPage = parseInt(meta.current_page) - 1;
+                if (links.prev != null) {
+                    window.location = `/products?page=${currentPage}`
+                }
+            })
+            $('#nextButton').click(function() {
+                let currentPage = parseInt(meta.current_page) + 1;
+                if (links.next != null) {
+                    window.location = `/products?page=${currentPage}`;
+                }
+            })
+        })
     </script>
-</body>
+    <script type="text/javascript">
+        function navigate(url, slug) {
+            let decode = decodeURIComponent(url);
+            console.log(url);
+            console.log(decode)
 
-</html>
+            sessionStorage.setItem("url", url);
+
+            window.location = `/products/${slug}`;
+        }
+    </script>
+@endpush

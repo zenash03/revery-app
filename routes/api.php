@@ -54,4 +54,5 @@ Route::post("register", [AuthController::class,"signup"]);
 Route::middleware("auth:sanctum")->group(function () {
     Route::resource("categories", CategoryController::class);
     Route::resource("products", ProductController::class);
+    // Route::get("/products/{slug}", ProductController::class, 'ProductController@showBySlug');
 });

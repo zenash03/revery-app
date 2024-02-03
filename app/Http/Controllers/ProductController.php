@@ -133,6 +133,20 @@ class ProductController extends BaseAPIController
         return response()->json($response, HttpResponse::HTTP_OK);
     }
 
+    public function showBySlug($slug) {
+        $products = Product::query();
+
+        return $products;
+
+        return $this->sendResponse(new ProductResource($products), 'Product Data Fetched.');
+
+        $response = [
+            "message" => "GET Products Data success",
+            "data"=> $products
+        ];
+        return response()->json($response, HttpResponse::HTTP_OK);
+    }
+
     /**
      * Show the form for editing the specified resource.
      *
