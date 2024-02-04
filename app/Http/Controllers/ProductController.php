@@ -54,7 +54,7 @@ class ProductController extends BaseAPIController
 
         $response = [
             "message" => "GET Products Data success",
-            "data"=> $products
+            "data" => $products
         ];
         return response()->json($response, HttpResponse::HTTP_OK);
     }
@@ -66,7 +66,6 @@ class ProductController extends BaseAPIController
      */
     public function create()
     {
-
     }
 
     /**
@@ -77,30 +76,42 @@ class ProductController extends BaseAPIController
      */
     public function store(Request $request)
     {
+        // return $request->all();
+
         $validator = Validator::make($request->all(), [
             "product_name" => "required",
-            "product_description"=> "required",
-            "product_price"=> ["required", "numeric"],
-            "category_id"=> ["required"],
-            "product_image_url"=> ["required"],
+            "product_description" => "required",
+            "product_price" => ["required", "numeric"],
+            "category_id" => ["required"],
+            "product_image_url" => ["required"],
         ]);
 
         if ($validator->fails()) {
             return $this->sendError($validator->errors()->first(), $validator->errors()->first(), 402);
         }
+
         try {
             $newID = UniqueIdGenerator::generate(['table' => 'products', 'field' => 'product_id', 'length' => 10, 'prefix' => 'P-']);
 
             $requestData = $request->all();
             $requestData["product_id"] = $newID;
 
+            $fileName = "";
+            $uploadImage = $request->file('product_image_url');
+            if ($uploadImage){
+                $fileName = time() . '_' . $request["product_image_url"]->getClientOriginalName();
+                $uploadImage->move(public_path("/images/uploads"), $fileName);
+            }
+            $requestData["product_image_url"] = $fileName;
+
             $product = Product::create($requestData);
+
+            // return $requestData;
 
             return $this->sendResponse(new ProductResource($product), "Product data added.");
 
             // return response()->json($response, HttpResponse::HTTP_CREATED);
-        }
-        catch (\Exception $e) {
+        } catch (\Exception $e) {
             return $this->sendError($e->getMessage(), "Error");
         }
     }
@@ -128,12 +139,13 @@ class ProductController extends BaseAPIController
 
         $response = [
             "message" => "GET Products Data success",
-            "data"=> $products
+            "data" => $products
         ];
         return response()->json($response, HttpResponse::HTTP_OK);
     }
 
-    public function showBySlug($slug) {
+    public function showBySlug($slug)
+    {
         $products = Product::query();
 
         return $products;
@@ -142,7 +154,7 @@ class ProductController extends BaseAPIController
 
         $response = [
             "message" => "GET Products Data success",
-            "data"=> $products
+            "data" => $products
         ];
         return response()->json($response, HttpResponse::HTTP_OK);
     }
@@ -172,10 +184,10 @@ class ProductController extends BaseAPIController
 
         $validator = Validator::make($request->all(), [
             "product_name" => "required",
-            "product_description"=> "required",
-            "product_price"=> ["required", "numeric"],
-            "category_id"=> ["required"],
-            "product_image_url"=> ["required"],
+            "product_description" => "required",
+            "product_price" => ["required", "numeric"],
+            "category_id" => ["required"],
+            "product_image_url" => ["required"],
         ]);
 
         if ($validator->fails()) {
@@ -188,9 +200,8 @@ class ProductController extends BaseAPIController
             $product->product_image_url = $input["product_image_url"];
             $product->save();
 
-            return $this->sendResponse(new ProductResource($product),"Product Updated.");
-        }
-        catch (QueryException $e) {
+            return $this->sendResponse(new ProductResource($product), "Product Updated.");
+        } catch (QueryException $e) {
             return $this->sendError($e->getMessage(), $e->getCode(), 400);
         }
     }
@@ -206,10 +217,9 @@ class ProductController extends BaseAPIController
         //
         try {
             $product->delete();
-            return $this->sendResponse(new ProductResource($product),"Product Deleted.");
+            return $this->sendResponse(new ProductResource($product), "Product Deleted.");
         } catch (Exception $e) {
             return $this->sendError($e->getMessage(), $e->getCode(), 400);
         }
-
     }
 }

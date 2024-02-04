@@ -82,9 +82,6 @@
                     "_token": $('meta[name="csrf-token"]').attr('content')
                 }
 
-                // alert(form)
-
-
                 let url = `http://127.0.0.1:8000/api/login`;
                 let settings = {
                     "url": url,
@@ -97,15 +94,19 @@
                     },
                     success: function(response) {
                         console.log(response)
+                        saveToken(response.data.token);
+
+                        window.location = '/dashboard/table/product'
                     },
                     error: function(jqXHR, textStatus, errorThrown) {
                         console.log(jqXHR);
-                        console.log(textStatus);
-                        console.log(errorThrown);
                     }
                 };
                 $.ajax(settings)
             })
         })
+        function saveToken(token) {
+            localStorage.setItem("web_token", token);
+        }
     </script>
 @endpush

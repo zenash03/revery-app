@@ -26,3 +26,6 @@ Route::get('/products', [ProductPageController::class,'productsPage'])->name('pr
 Route::get('/products/{slug}', [PageController::class, 'productDetailPage'])->name('productDetail');
 
 Route::get('/login', [LoginController::class, 'index'])->name('login');
+Route::get('/dashboard/table/{name}', function() {
+    return view('dashboard');
+});

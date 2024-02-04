@@ -16,6 +16,10 @@ class AuthController extends BaseAPIController
             $success['token'] =  $authUser->createToken('MyAuthApp')->plainTextToken;
             $success['name'] =  $authUser->name;
 
+            $user = User::find($authUser["id"]);
+            $user->remember_token = $success["token"];
+            $user->save();
+
             return $this->sendResponse($success, 'User signed in');
         }
         else{
