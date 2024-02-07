@@ -2,16 +2,19 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Cache;
 use Jenssegers\Agent\Facades\Agent;
 
 class ProductPageController extends Controller
 {
     public function productsPage() {
         $agent = new Agent();
-        $token = "3|n4cDcB5uGDRDkCKVXR3mM72zyuNGKfaloxY2Lm7ue80657bc";
-        $data = null;
+
+        $token = GeneratePublicToken::generate();
 
         // $headers = [
         //     "Authorization" => "Bearer" .$token,
@@ -32,6 +35,6 @@ class ProductPageController extends Controller
             // ]);
             // $responseBody = $response->json();
 
-        return view("productsPage", compact("agent", "data"));
+        return view("productsPage", compact("agent", "token"));
     }
 }

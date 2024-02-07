@@ -93,10 +93,9 @@
                         console.log("waiting")
                     },
                     success: function(response) {
-                        console.log(response)
-                        saveToken(response.data.token);
+                        saveUserData(response.data);
 
-                        window.location = '/dashboard/table/product'
+                        window.location = '/dashboard/table/products'
                     },
                     error: function(jqXHR, textStatus, errorThrown) {
                         console.log(jqXHR);
@@ -105,8 +104,8 @@
                 $.ajax(settings)
             })
         })
-        function saveToken(token) {
-            localStorage.setItem("web_token", token);
+        function saveUserData(user) {
+            localStorage.setItem("user_data", JSON.stringify(user));
         }
     </script>
 @endpush

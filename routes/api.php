@@ -49,7 +49,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::post("login", [AuthController::class,"signin"]);
 Route::post("register", [AuthController::class,"signup"]);
-
+Route::post("logout", [AuthController::class,"logout"]);
 
 Route::middleware("auth:sanctum")->group(function () {
     Route::resource("categories", CategoryController::class);

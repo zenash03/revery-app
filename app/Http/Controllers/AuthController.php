@@ -13,7 +13,7 @@ class AuthController extends BaseAPIController
     {
         if(Auth::attempt(['email' => $request->email, 'password' => $request->password])){
             $authUser = Auth::user();
-            $success['token'] =  $authUser->createToken('MyAuthApp')->plainTextToken;
+            $success['token'] =  $authUser->createToken('loginAuth')->plainTextToken;
             $success['name'] =  $authUser->name;
 
             $user = User::find($authUser["id"]);
@@ -40,11 +40,21 @@ class AuthController extends BaseAPIController
         }
 
         $input = $request->all();
+        $input['role'] = 'user';
         $input['password'] = bcrypt($input['password']);
         $user = User::create($input);
         $success['token'] =  $user->createToken('MyAuthApp')->plainTextToken;
         $success['name'] =  $user->name;
 
         return $this->sendResponse($success, 'User created successfully.');
+    }
+
+    public function logout(Request $request) {
+        if (Auth::check() && Auth::user()->role == 'admin') {
+            Auth::user()->tokens()->delete();
+            $success['token'] = "";
+            $success['name'] = Auth::user()->name;
+            return $this->sendResponse($success,'Logout');
+        }
     }
 }

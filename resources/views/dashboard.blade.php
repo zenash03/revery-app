@@ -18,7 +18,7 @@
 </head> --}}
 
 @section('body')
-    <div class="flex flex-col bg-gray-100">
+    <div class="flex flex-col bg-gray-100 min-h-screen">
 
         <div class="bg-white text-white shadow w-full p-2 flex items-center justify-between">
             <div class="flex items-center">

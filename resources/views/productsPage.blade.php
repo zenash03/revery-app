@@ -173,6 +173,11 @@
 
 @push('scripts')
     <script type="module">
+        function getToken() {
+            let token = "Bearer " + @json($token);
+            return token;
+        }
+
         function setting(url, method, authorization) {
             let settings = {
                 "url": url,
@@ -190,8 +195,8 @@
         function loadProductData(page = 1) {
             var response = null;
             let url = `http://127.0.0.1:8000/api/products?page=${page}`;
-            let settings = setting(url, "GET",
-                "Bearer 1|IhNn8OHUHlZPFl8fIBN41RhukE444SfRRFuCuHJi1102ff7f")
+            let token = getToken()
+            let settings = setting(url, "GET", token);
             $.ajax(settings).done(function(res) {
                 response = res;
                 // console.log(response);
