@@ -15,7 +15,7 @@
             <nav class="flex" aria-label="Breadcrumb">
                 <ol class="inline-flex items-center space-x-1 md:space-x-2 rtl:space-x-reverse">
                     <li class="inline-flex items-center">
-                        <a href="#"
+                        <a href="/home"
                             class="inline-flex items-center text-sm font-secondary font-semibold text-gray-600 hover:text-primary">
                             <svg class="w-3 h-3 me-2.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
                                 fill="currentColor" viewBox="0 0 20 20">
@@ -222,13 +222,13 @@
             // let decode = decodeURIComponent($.param (params));
             // console.log(decode)
 
-            product_price = "Rp " + product_price
+            product_price = "Rp " + data.product_price.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1.");
             let element =
             // onclick="navigate('${str}')"
                 `<div class="w-full max-w-lg bg-white border border-gray-200 rounded-lg shadow">
                     <a href="/products/${slug}" onclick="navigate('${str}', '${slug}')">
                         <img class="p-5 pb-3 rounded-t-lg"
-                            src="{{ asset('images/collections -20240110T133638Z-001/collections/Custom Bouquet/2E280149-EB91-4844-8350-D03F5CC2CCCB.jpg') }}"
+                            src="{{ asset('images/uploads/${product_image_url}') }}"
                             alt="product image" />
                     </a>
                         <div class="px-5 pb-5">

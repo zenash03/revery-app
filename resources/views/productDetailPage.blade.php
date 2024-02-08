@@ -11,8 +11,16 @@
         <div class="container px-8 mx-auto">
             <nav class="flex" aria-label="Breadcrumb">
                 <ol class="inline-flex items-center space-x-1 md:space-x-2 rtl:space-x-reverse">
+                    <li>
+                        <a href="/products" type="button" class="text-white bg-pink-500 hover:bg-primary focus:outline-none font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center me-2">
+                            <svg class="w-3.5 h-3.5 me-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="m15 19-7-7 7-7"/>
+                            </svg>
+                            Back
+                        </a>
+                    </li>
                     <li class="inline-flex items-center">
-                        <a href="#"
+                        <a href="/home"
                             class="inline-flex items-center text-sm font-secondary font-semibold text-gray-600 hover:text-primary">
                             <svg class="w-3 h-3 me-2.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
                                 fill="currentColor" viewBox="0 0 20 20">
@@ -40,7 +48,17 @@
                                 <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
                                     stroke-width="1.5" d="m1 9 4-4-4-4" />
                             </svg>
-                            <span class="ms-1 text-sm font-secondary font-semibold md:ms-2 text-gray-400">Products</span>
+                            <a class="ms-1 text-sm font-secondary font-semibold md:ms-2 text-gray-600 hover:text-primary" href="/products">Products</a>
+                        </div>
+                    </li>
+                    <li aria-current="page">
+                        <div class="flex items-center">
+                            <svg class="rtl:rotate-180  w-3 h-3 mx-1 text-gray-400" aria-hidden="true"
+                                xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 6 10">
+                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+                                    stroke-width="1.5" d="m1 9 4-4-4-4" />
+                            </svg>
+                            <span class="ms-1 text-sm font-secondary font-semibold md:ms-2 text-gray-400">Details</span>
                         </div>
                     </li>
                 </ol>
@@ -52,8 +70,8 @@
         <div class="container px-5 py-16 mx-auto">
             <div class="lg:w-4/5 mx-auto flex flex-wrap">
                 <div class="lg:w-1/2">
-                    <img alt="ecommerce" class="object-cover object-center rounded"
-                        src="https://www.whitmorerarebooks.com/pictures/medium/2465.jpg">
+                    <img class="object-cover object-center rounded"
+                         alt="Product image" id="product_image">
                 </div>
                 <div class="lg:w-1/2 w-full lg:pl-10 lg:py-6 mt-6 px-8 lg:mt-0">
                     <h2 class="text-sm text-gray-500 tracking-widest font-secondary mb-2" id="category_name"></h2>
@@ -97,8 +115,9 @@
             $('#product_name').text(data.product_name);
             $('#product_description').text(data.product_description);
 
-            let productPrice = "Rp. " + data.product_price;
+            let productPrice = "Rp " + data.product_price.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1.");
             $('#product_price').text(productPrice);
+            $('#product_image').attr('src', `{{ asset('images/uploads/${data.product_image_url}') }}`);
         })
 
 

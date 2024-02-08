@@ -25,19 +25,19 @@ class CategorySeeder extends Seeder
 
         // DB::table('category')->insert($categories);
 
-        // foreach ($categories as $category) {
-            //     Category::create($category);
-            // }
+        foreach ($categories as $category) {
+                Category::create($category);
+            }
 
-        $faker = \Faker\Factory::create();
-        for( $i = 0; $i < 15; $i++ ) {
-            $newID = UniqueIdGenerator::generate(['table' => 'categories', 'field' => 'category_id', 'length' => 10, 'prefix' => 'CAT-']);
+        // $faker = \Faker\Factory::create();
+        // for( $i = 0; $i < 15; $i++ ) {
+        //     $newID = UniqueIdGenerator::generate(['table' => 'categories', 'field' => 'category_id', 'length' => 10, 'prefix' => 'CAT-']);
 
-            Category::create([
-                'category_id' => $newID,
-                'category_name' => $faker->name,
-                'category_description' => $faker->sentence
-            ]);
-        }
+        //     Category::create([
+        //         'category_id' => $newID,
+        //         'category_name' => $faker->name,
+        //         'category_description' => $faker->sentence
+        //     ]);
+        // }
     }
 }

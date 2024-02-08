@@ -35,6 +35,8 @@ class ProductPageController extends Controller
             // ]);
             // $responseBody = $response->json();
 
+        // return dd($token);
+
         return view("productsPage", compact("agent", "token"));
     }
 }
