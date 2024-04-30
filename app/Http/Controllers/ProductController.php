@@ -132,8 +132,9 @@ class ProductController extends BaseAPIController
         // return response()->json($response, HttpResponse::HTTP_OK);
 
         $products = Product::query()->find($id);
-
         // return $products;
+
+        // return dd($products);
 
         return $this->sendResponse(new ProductResource($products), 'Product Data Fetched.');
 

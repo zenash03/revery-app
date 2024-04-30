@@ -26,9 +26,14 @@ Route::get('/products', [ProductPageController::class,'productsPage'])->name('pr
 Route::get('/products/{slug}', [PageController::class, 'productDetailPage'])->name('productDetail');
 
 Route::get('/login', [LoginController::class, 'index'])->name('login');
-Route::get('/dashboard/table/{name}', function($name) {
-    return view('tableProductPage', compact('name'));
-});
-Route::get('/dashboard', function () {
-    return view('layouts.components.adminTemplate');
+
+Route::middleware("auth:sanctum")->group(function () {
+    Route::get('
+    /table/{name}', function($name) {
+        return view('tableProductPage', compact('name'));
+
+    });
+    Route::get('/dashboard', function () {
+        return view('dashboardPage');
+    });
 });
